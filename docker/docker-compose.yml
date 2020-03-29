@@ -1,0 +1,14 @@
+version: "2"
+services:
+  stream-server:
+    image: kmacmcfarlane/stream-server
+    build:
+      context: "../"
+      dockerfile: "docker/stream-server/Dockerfile"
+    cpu_shares: 1024
+    #mem_limit: 67108864
+    environment:
+      CONTAINER_NAME: streaming-server
+    container_name: "streaming-server"
+    ports:
+      - "1935:1935"

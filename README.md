@@ -1,2 +1,2 @@
-# streaming-server
-Relay, record, and transcode to HLS from rtmp streams.
+# stream-server
+A streaming video server that can accept, record, transcode to hls/dash, and relay live streams.
