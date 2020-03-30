@@ -6,6 +6,11 @@ run: build
 
 daemon: build
 	docker-compose -f docker/docker-compose.yml up -d
-
 stop:
 	docker-compose -f docker/docker-compose.yml down
+
+logs:
+	docker-compose -f docker/docker-compose.yml logs -f
+
+shell:
+	docker-compose -f docker/docker-compose.yml exec streaming-server /bin/sh
