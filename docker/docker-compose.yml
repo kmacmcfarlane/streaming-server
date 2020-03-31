@@ -9,12 +9,19 @@ services:
     #mem_limit: 67108864
     environment:
       CONTAINER_NAME: streaming-server
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
     container_name: "streaming-server"
     ports:
       - "1935:1935"
       - "80:80"
     volumes:
       - space:/mnt/space
-    command: "/bin/bash -c 'ls -l /mnt/space/streaming-server/streams/hls && nginx -g \"daemon off;\"'"
+    command: "/bin/bash -c 'chmod -R 777 /mnt/space && nginx -g \"daemon off;\"'"
 volumes:
   space:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /mnt/space
