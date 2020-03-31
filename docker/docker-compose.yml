@@ -13,3 +13,8 @@ services:
     ports:
       - "1935:1935"
       - "80:80"
+    volumes:
+      - space:/mnt/space
+    command: "/bin/bash -c 'ls -l /mnt/space/streaming-server/streams/hls && nginx -g \"daemon off;\"'"
+volumes:
+  space:
