@@ -9,14 +9,7 @@ RUN apt update &&\
   apt remove -y zip unzip &&\
   apt clean
 
-ENV AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-ENV AWS_SECRET_ACCESSKEY=${AWS_SECRET_ACCESS_KEY}
-
-RUN mkdir ~/.aws && echo "[default]\n\
-aws_access_key_id = ${AWS_ACCESS_KEY_ID}\n\
-aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}" > ~/.aws/credentials
-
-RUN mkdir -p /var/log/nginx && mkdir -p /app/log
+RUN mkdir -p /var/log/nginx && mkdir -p /app/log && chmod 777 /app/log
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY ./scripts /app/scripts/
