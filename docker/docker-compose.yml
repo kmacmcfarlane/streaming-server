@@ -24,4 +24,4 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /mnt/space
+      device: /c/Users/kmacm/space
