@@ -7,10 +7,10 @@ services:
       dockerfile: "docker/streaming-server/Dockerfile"
     cpu_shares: 1024
     #mem_limit: 67108864
+    env_file:
+      - .env
     environment:
       CONTAINER_NAME: streaming-server
-      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
     container_name: "streaming-server"
     ports:
       - "1935:1935"
