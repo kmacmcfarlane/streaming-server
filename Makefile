@@ -1,11 +1,21 @@
-build: build-template
+clean:
+	rm -f ./gen/* ./gen/.* || true
+
+build: | clean gen
 	docker-compose -f docker/docker-compose.yml build
 
-build-template-tool:
-	go build -o ./bin ./internal/cmd/template_tool
+gen: build-template-tool
+	./gen.sh
 
-build-template: build-template-tool
-	./bin/template_tool --template ./nginx.conf.tmpl --config ./config.json --out ./nginx.conf
+build-template-tool:
+	go build -o ./bin/template_tool ./internal/cmd/template_tool
+
+build-env-file: build-template-tool
+	./bin/template_tool --template ./template/.env.tmpl --config ./config.json --out ./gen/.env
+
+build-aws-credentials: build-template-tool
+	./bin/template_tool --template ./template/credentials.tmpl --config ./config.json --out ./gen/credentials
+	chmod 600 ./gen/credentials
 
 run:
 	docker-compose -f docker/docker-compose.yml up

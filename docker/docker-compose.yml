@@ -8,7 +8,7 @@ services:
     cpu_shares: 1024
     #mem_limit: 67108864
     env_file:
-      - .env
+      - ../gen/.env
     environment:
       CONTAINER_NAME: streaming-server
     container_name: "streaming-server"
