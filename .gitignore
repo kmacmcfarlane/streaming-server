@@ -1,6 +1,4 @@
 .idea
-docker/.env
-
 config.json
-nginx.conf
 bin/*
+gen/*

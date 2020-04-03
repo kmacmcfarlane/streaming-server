@@ -9,10 +9,10 @@ RUN apt update &&\
   apt remove -y zip unzip &&\
   apt clean
 
-RUN mkdir -p /var/log/nginx && mkdir -p /app/log && chmod 777 /app/log
+RUN mkdir -p /var/log/nginx
 
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY ./scripts /app/scripts/
+COPY ./gen/nginx.conf /etc/nginx/nginx.conf
+COPY ./script /app/script/
 COPY ./public /app/public/
 
 WORKDIR /app/

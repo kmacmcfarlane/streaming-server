@@ -10,7 +10,7 @@ events {
 http {
   server {
     listen 80;
-    server_name {{.ServerDomain}}
+    server_name {{.ServerDomain}};
 
     location /hls {
       types {
@@ -52,12 +52,22 @@ rtmp {
 
       push_reconnect 1s;
       
-      {{range .RTMPServers}}push rtmp://{{.Domain}}/{{.StreamKey}}{{end}}
+      {{range .LiveRTMPServers}}push rtmp://{{.URL}}/{{.StreamKey}};{{end}}
       push rtmp://localhost:1935/hls;
+
+      exec_record_done ./script/on_record_done.sh $app $path
 
       record all;
       record_path /mnt/space/streaming-server/streams/rtmp;
       record_unique on;
+    }
+
+    application test {
+      live on;
+
+      push_reconnect 1s;
+
+      {{range .TestRTMPServers}}push rtmp://{{.URL}}/{{.StreamKey}};{{end}}
     }
 
     application hls {
@@ -73,11 +83,13 @@ rtmp {
       hls_variant _mid BANDWIDTH=320000;
       hls_variant _hi  BANDWIDTH=640000;
 
+      exec_record_done ./script/on_record_done.sh $app $path;
+
       record all;
       record_path /mnt/space/streaming-server/streams/hls;
       record_unique on;
 
-      exec_record_done bash -c "/app/scripts/on_record_done.sh $app $path &> /app/log/hls.log";
+      exec_record_done bash -c "/app/scripts/on_record_done.sh $app $path &> /var/log/nginx/access.log";
     }
   }
 }
