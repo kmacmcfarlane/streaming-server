@@ -1,2 +1,6 @@
 .idea
 docker/.env
+
+server.conf
+nginx.conf
+bin/*
