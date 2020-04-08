@@ -1,8 +1,8 @@
 clean:
 	rm -f ./gen/* ./gen/.* || true
 
-build: | clean gen
-	docker-compose -f docker/docker-compose.yml build
+build:
+	docker-compose build
 
 gen: build-template-tool
 	./gen.sh
@@ -18,16 +18,16 @@ build-aws-credentials: build-template-tool
 	chmod 600 ./gen/credentials
 
 run:
-	docker-compose -f docker/docker-compose.yml up
+	docker-compose up
 
 daemon:
-	docker-compose -f docker/docker-compose.yml up -d
+	docker-compose up -d
 
 stop:
-	docker-compose -f docker/docker-compose.yml down
+	docker-compose down
 
 logs:
-	docker-compose -f docker/docker-compose.yml logs -f
+	docker-compose logs -f
 
 shell:
-	docker-compose -f docker/docker-compose.yml exec streaming-server /bin/bash
+	docker-compose exec streaming-server /bin/bash

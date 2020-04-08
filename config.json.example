@@ -1,14 +1,14 @@
 {
-    "server_domain": "doepmusic.com",
-    "servers": [
-        {"url": "live.twitch.tv:1935/app", "stream_key": "live_501282413_YE2lbbG41Gwfcidv8B25DsiQlsOLSm"}
+    "server_domain": "example.com",
+    "live_rtmp_servers": [
+        {"url": "live.twitch.tv:1935/app", "stream_key": "live_abc123"}
     ],
-    "test_servers": [
-        {"url": "live.twitch.tv:1935/app", "stream_key": "live_501282413_YE2lbbG41Gwfcidv8B25DsiQlsOLSm?bandwidthtest=true"}
+    "test_rtmp_servers": [
+        {"url": "live.twitch.tv:1935/app", "stream_key": "live_abc123?bandwidthtest=true"}
     ],
     "storage": {
-        "s3_bucket_name": "streaming-server-streams",
-        "aws_access_key_id": "AKIA2TOS6ONMN2PHZHAA",
-        "aws_secret_access_key": "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"
+        "s3_bucket_name": "my-bucket-name",
+        "aws_access_key_id": "xxxxxxxxxxxxxxxxxx",
+        "aws_secret_access_key": "yyyyyyyyyyyyyyyyyyyyyyy"
     }
 }
