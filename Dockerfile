@@ -7,14 +7,13 @@ RUN apt update &&\
   unzip awscliv2.zip &&\
   ./aws/install &&\
   apt remove -y zip unzip &&\
-  apt clean
+  apt clean &&\
+  wget https://dl.google.com/go/go1.14.1.linux-amd64.tar.gz &&\
+  tar -C /usr/local -zxf go1.14.1.linux-amd64.tar.gz
 
-RUN mkdir -p /var/log/nginx
+ENV PATH=$PATH:/usr/local/go/bin
 
-COPY ./gen/nginx.conf /etc/nginx/nginx.conf
-COPY ./script /app/script/
-COPY ./public /app/public/
-
+COPY ./ /app
 WORKDIR /app/
 
-RUN mkdir -p /var/log/nginx
+RUN make gen && cp gen/nginx.conf /etc/nginx/nginx.conf && mkdir -p /var/log/nginx

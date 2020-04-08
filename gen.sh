@@ -1,5 +1,6 @@
 #!/bin/bash
 
+mkdir -p ./gen
 for template in ./template/*.tmpl ./template/.*.tmpl
 do
     outFile=`echo $template|sed -e "s/.tmpl//"|sed -e "s/.\/template\///"`
