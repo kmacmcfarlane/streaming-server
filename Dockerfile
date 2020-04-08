@@ -16,5 +16,4 @@ ENV PATH=$PATH:/usr/local/go/bin
 COPY ./ /app
 WORKDIR /app/
 
-RUN ./gen.sh && mkdir -p /var/log/nginx
-COPY ./gen/nginx.conf /etc/nginx/nginx.conf
+RUN make gen && cp gen/nginx.conf /etc/nginx/nginx.conf && mkdir -p /var/log/nginx
