@@ -8,7 +8,8 @@ A streaming video server that can accept, record, transcode to hls/dash, and rel
 
 # Usage
 ## Create a config.json file, see config.json.example:
-    make cp config.json.example config.json
+    cp config.example.json config.json
+    vi config.json
     
 ## Build
     make build
@@ -19,7 +20,7 @@ A streaming video server that can accept, record, transcode to hls/dash, and rel
 ## Run in Background
     make daemon
 
-## View logs
+## Follow Logs When in Background
     make logs
 
 ## Stop Background Daemon

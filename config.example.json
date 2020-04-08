@@ -1,0 +1,20 @@
+{
+  "server_domain": "example.com",
+  "live_rtmp_servers": [
+    {
+      "url": "live.twitch.tv:1935/app",
+      "stream_key": "live_123abc"
+    }
+  ],
+  "test_rtmp_servers": [
+    {
+      "url": "live.twitch.tv:1935/app",
+      "stream_key": "live_123abc?bandwidthtest=true"
+    }
+  ],
+  "storage": {
+    "s3_bucket_name": "bucket_name",
+    "aws_access_key_id": "xyxyxy",
+    "aws_secret_access_key": "ababababa"
+  }
+}
