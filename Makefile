@@ -1,7 +1,7 @@
 clean:
 	rm -f ./gen/* ./gen/.* || true
 
-build:
+build: gen
 	docker-compose build
 
 gen: build-template-tool
@@ -17,10 +17,10 @@ build-aws-credentials: build-template-tool
 	./bin/template_tool --template ./template/credentials.tmpl --config ./config.json --out ./gen/credentials
 	chmod 600 ./gen/credentials
 
-run:
+run: build-env-file
 	docker-compose up
 
-daemon:
+daemon: build-env-file
 	docker-compose up -d
 
 stop:

@@ -1,19 +1,18 @@
-FROM tiangolo/nginx-rtmp
-
-# Install aws cli
-RUN apt-get -qq update &&\
-  apt-get -qq install zip unzip &&\
-  curl -q "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" &&\
-  unzip -q awscliv2.zip &&\
-  ./aws/install &&\
-  apt-get -qq remove -y zip unzip &&\
-  apt-get -qq clean &&\
-  wget -q https://dl.google.com/go/go1.14.1.linux-amd64.tar.gz &&\
-  tar -C /usr/local -zxf go1.14.1.linux-amd64.tar.gz
-
-ENV PATH=$PATH:/usr/local/go/bin
-
+FROM golang:latest AS gen
 COPY ./ /app
-WORKDIR /app/
+WORKDIR /app
+RUN ./gen.sh
 
-RUN make gen && cp gen/nginx.conf /etc/nginx/nginx.conf && mkdir -p /var/log/nginx
+FROM tiangolo/nginx-rtmp AS nginx
+
+COPY --from=gen /app/gen/nginx.conf /etc/nginx/nginx.conf
+COPY --from=gen /app/script/* /app/script/
+
+RUN apt update &&\
+  apt install -y curl unzip &&\
+  rm -rf /var/lib/apt/lists/*
+RUN curl -q "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" &&\
+  unzip -q awscliv2.zip &&\
+  ./aws/install
+
+RUN chmod 777 /app
