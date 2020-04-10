@@ -15,7 +15,7 @@
   "storage": {
     "s3_bucket_name": "bucket_name",
     "aws_access_key_id": "xyxyxy",
-    "aws_secret_access_key": "ababababa"
+    "aws_secret_access_key": "ababababa",
     "recording_directory": "/tmp/recordings"
   }
 }

@@ -16,3 +16,4 @@ RUN curl -q "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscl
   ./aws/install
 
 RUN chmod 777 /app
+ENTRYPOINT nginx -g "daemon off;"
