@@ -17,10 +17,10 @@ build-aws-credentials: build-template-tool
 	./bin/template_tool --template ./template/credentials.tmpl --config ./config.json --out ./gen/credentials
 	chmod 600 ./gen/credentials
 
-run: build-env-file
+run: |gen build-env-file
 	docker-compose -f ./gen/docker-compose.yml up
 
-daemon: build-env-file
+daemon: |gen build-env-file
 	docker-compose -f ./gen/docker-compose.yml up -d
 
 stop:

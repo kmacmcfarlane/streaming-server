@@ -55,7 +55,7 @@ rtmp {
       {{range .LiveRTMPServers}}push rtmp://{{.URL}}/{{.StreamKey}};{{end}}
       push rtmp://localhost:1935/hls;
 
-      exec_record_done ./script/on_record_done.sh $app $path
+      exec_record_done /app/script/on_record_done.sh $app $path
 
       record all;
       record_path /mnt/space/streaming-server/streams/rtmp;
@@ -83,7 +83,7 @@ rtmp {
       hls_variant _mid BANDWIDTH=320000;
       hls_variant _hi  BANDWIDTH=640000;
 
-      exec_record_done ./script/on_record_done.sh $app $path;
+      exec_record_done /app/script/on_record_done.sh $app $path;
 
       record all;
       record_path /mnt/space/streaming-server/streams/hls;
