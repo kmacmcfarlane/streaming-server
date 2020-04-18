@@ -52,7 +52,9 @@ rtmp {
 
       push_reconnect 1s;
       
-      {{range .LiveRTMPServers}}push rtmp://{{.URL}}/{{.StreamKey}};{{end}}
+      {{range .LiveRTMPServers}}
+      push rtmp://{{.URL}}/{{.StreamKey}};
+{{end}}
       push rtmp://localhost:1935/hls;
 
       exec_record_done /app/script/on_record_done.sh $app $path

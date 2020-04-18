@@ -18,10 +18,15 @@ build-aws-credentials: build-template-tool
 	chmod 600 ./gen/credentials
 
 run: |gen build-env-file
-	docker-compose -f ./gen/docker-compose.yml up
+	docker-compose -f ./gen/docker-compose.yml up --build
 
 daemon: |gen build-env-file
-	docker-compose -f ./gen/docker-compose.yml up -d
+	docker-compose -f ./gen/docker-compose.yml up --build -d
+	make logs
+
+restart:
+	docker-compose -f ./gen/docker-compose.yml stop
+	make daemon
 
 stop:
 	docker-compose -f ./gen/docker-compose.yml down
