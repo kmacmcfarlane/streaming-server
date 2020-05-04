@@ -7,6 +7,7 @@ FROM tiangolo/nginx-rtmp AS nginx
 
 COPY --from=gen /app/gen/nginx.conf /etc/nginx/nginx.conf
 COPY --from=gen /app/script/* /app/script/
+COPY --from=gen /app/public /app/public
 
 RUN apt update &&\
   apt install -y curl unzip &&\
