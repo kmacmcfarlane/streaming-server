@@ -17,6 +17,7 @@ services:
       - "80:80"
     volumes:
       - {{.Storage.RecordingDirectory}}:/mnt/space/
+    restart: always
     command: "/bin/bash -c 'chmod -R 777 /mnt/space &&\
              mkdir -p /mnt/space/streaming-server/streams/hls || true &&\
              mkdir -p /mnt/space/streaming-server/streams/rtmp || true &&\

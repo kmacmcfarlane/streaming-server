@@ -7,7 +7,7 @@ A streaming video server that can accept, record, transcode to hls/dash, and rel
 * Docker Compose https://docs.docker.com/compose/install/
 
 # Usage
-## Create a config.json file, see config.json.example:
+## Create a config.json file, see config.example.json:
     cp config.example.json config.json
     vi config.json
     

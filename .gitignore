@@ -2,3 +2,4 @@
 config.json
 bin/*
 gen/*
+node_modules
