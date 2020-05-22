@@ -1,5 +1,6 @@
 .idea
 config.json
-bin/*
-gen/*
-node_modules
+server/bin/*
+server/gen/*
+video-site/node_modules
+recordings

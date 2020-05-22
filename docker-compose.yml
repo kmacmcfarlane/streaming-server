@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  streaming-server:
+    image: kmacmcfarlane/streaming-server
+    build:
+      context: "./"
+      dockerfile: "streaming-server/Dockerfile"
+    environment:
+      CONTAINER_NAME: streaming-server
+    container_name: "streaming-server"
+    ports:
+      - "1935:1935"
+      - "80:80"
+      - "443:443"
+    volumes:
+      - recording:/mnt/space/
+    restart: always
+    command: "/bin/bash -c 'chmod -R 777 /mnt/space &&\
+             mkdir -p /mnt/space/streaming-server/streams/hls || true &&\
+             mkdir -p /mnt/space/streaming-server/streams/rtmp || true &&\
+             echo starting nginx... &&\
+             nginx -g \"daemon off;\"'"
+  video-site:
+    build:
+      context: "."
+      dockerfile: video-site/Dockerfile
+volumes:
+  recording:
+    driver_opts:
+      type: none
+      device: ./recording
+      o: bind

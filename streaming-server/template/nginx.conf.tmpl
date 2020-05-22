@@ -1,0 +1,96 @@
+error_log /var/log/nginx/error.log info;
+
+events {
+  worker_connections 1024;
+}
+
+http {
+  server {
+    listen 80;
+    server_name {{.StreamingServer.Domain}};
+
+    location /hls {
+      types {
+        application/vnd.apple.mpegurl m3u8;
+        video/mp2t ts;
+      }
+
+      index index.m3u8
+
+      root /mnt/space/streaming-server/streams/hls; # Will look for files in the /hls subdirectory
+
+      add_header Cache-Control no-cache;
+
+      # Allow cross-domain embedding of the files
+      add_header Access-Control-Allow-Origin *; 
+    }
+
+    location /stat {
+      rtmp_stat all;
+    }
+
+    location / {
+      proxy_pass http://video-site:8080/;
+    }
+  }
+}
+
+rtmp {
+  server {
+    listen 1935;
+    chunk_size 4096;
+
+    access_log /var/log/nginx/access.log combined;
+    access_log on;
+
+    application live {
+      live on;
+
+      push_reconnect 1s;
+      
+      {{range .StreamingServer.LiveRTMPRelays}}
+      push rtmp://{{.URL}}/{{.StreamKey}};
+{{end}}
+      push rtmp://localhost:1935/hls;
+
+      exec_record_done /app/script/on_record_done.sh $app $path
+
+      record all;
+      record_path /mnt/space/streaming-server/streams/rtmp;
+      record_unique on;
+    }
+
+    application test {
+      live on;
+
+      push_reconnect 1s;
+
+      {{range .StreamingServer.TestRTMPRelays}}
+      push rtmp://{{.URL}}/{{.StreamKey}};
+{{end}}
+    }
+
+    application hls {
+      live on;
+
+      hls on;
+      hls_path /tmp/hls;
+      hls_nested on;
+      hls_type live;
+      hls_fragment 5s;
+
+      hls_variant _low BANDWIDTH=160000;
+      hls_variant _mid BANDWIDTH=320000;
+      hls_variant _hi  BANDWIDTH=640000;
+
+      exec_record_done /app/script/on_record_done.sh $app $path;
+
+      record all;
+      record_path /mnt/space/streaming-server/streams/hls;
+      record_unique on;
+
+      exec_record_done bash -c "/app/scripts/on_record_done.sh $app $path &> /var/log/nginx/access.log";
+    }
+  }
+}
+

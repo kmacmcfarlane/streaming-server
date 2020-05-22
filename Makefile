@@ -1,38 +1,20 @@
-clean:
-	rm -f ./gen/* ./gen/.* || true
+all: daemon
 
-build: gen
-	docker-compose -f ./gen/docker-compose.yml build
+build:
+	docker-compose build
 
-gen: build-template-tool
-	./gen.sh
+start:
+	docker-compose up --build
 
-build-template-tool:
-	go build -o ./bin/template_tool ./internal/cmd/template_tool
-
-build-env-file: build-template-tool
-	./bin/template_tool --template ./template/.env.tmpl --config ./config.json --out ./gen/.env
-
-build-aws-credentials: build-template-tool
-	./bin/template_tool --template ./template/credentials.tmpl --config ./config.json --out ./gen/credentials
-	chmod 600 ./gen/credentials
-
-run: |gen build-env-file
-	docker-compose -f ./gen/docker-compose.yml up --build
-
-daemon: |gen build-env-file
-	docker-compose -f ./gen/docker-compose.yml up --build -d
+daemon:
+	docker-compose up --build -d
 	make logs
 
-restart:
-	docker-compose -f ./gen/docker-compose.yml stop
-	make daemon
-
 stop:
-	docker-compose -f ./gen/docker-compose.yml down
+	docker-compose down
 
 logs:
-	docker-compose -f ./gen/docker-compose.yml logs -f
+	docker-compose logs -f
 
 shell:
-	docker-compose -f ./gen/docker-compose.yml exec streaming-server /bin/bash
+	docker-compose exec streaming-server /bin/bash

@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://github.com/kmacmcfarlane/streaming-server/config.schema.json",
+  "title": "Streaming Server Configuration",
+  "description": "This describes a configuration file providing server and video site configuration values.",
+  "type": "object",
+  "properties": {
+    "streamingServer": {
+      "type": "object",
+      "$ref": "#/definitions/streamingServer"
+    },
+    "videoSite": {
+      "type": "object",
+      "$ref": "#/definitions/videoSite"
+    }
+  },
+  "definitions": {
+    "streamingServer": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string"
+        },
+        "liveRtmpRelays": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/rtmpRelay"
+          }
+        },
+        "testRtmpRelays": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/rtmpRelay"
+          }
+        },
+        "storage": {
+          "type": "object",
+          "properties": {
+            "s3BucketName": {
+              "type": "string"
+            },
+            "awsAccessKeyId": {
+              "type": "string"
+            },
+            "awsSecretAccessKey": {
+              "type": "string"
+            },
+            "recordingDirectory": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "rtmpRelay": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "streamKey": {
+          "type": "string"
+        }
+      }
+    },
+    "videoSite": {
+      "type": "object",
+      "properties": {
+
+      }
+    }
+  }
+}
