@@ -69,7 +69,9 @@ rtmp {
 
       push_reconnect 1s;
 
-      {{range .TestRTMPServers}}push rtmp://{{.URL}}/{{.StreamKey}};{{end}}
+      {{range .TestRTMPServers}}
+      push rtmp://{{.URL}}/{{.StreamKey}};
+{{end}}
     }
 
     application hls {
