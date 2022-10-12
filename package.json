@@ -26,6 +26,6 @@
     "webpack": "^4.42.1"
   },
   "dependencies": {
-    "video.js": "^7.7.5"
+    "video.js": "^7.20.3"
   }
 }
