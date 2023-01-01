@@ -23,7 +23,7 @@
   "homepage": "https://github.com/kmacmcfarlane/streaming-server#readme",
   "devDependencies": {
     "vue": "^2.6.11",
-    "webpack": "^4.42.1"
+    "webpack": "^5.75.0"
   },
   "dependencies": {
     "video.js": "^7.7.5"
